@@ -15,3 +15,11 @@ app.post('/food', async (req, res) => {
 app.get('/food', async (req, res) => {
   await FoodController.getFoodItems(res);
 });
+app.put('/price', async (req, res) => {
+  const { name, cost } = req.body;
+  await FoodController.updateFoodByPrice(res, name, cost);
+});
+app.delete('/food', async (req, res) => {
+  const { name } = req.body;
+  await FoodController.deleteFoodByName(res, name);
+});

@@ -6,6 +6,10 @@ const addFoodItem = async (name, cost) => {
     cost,
   });
   try {
+    const isFoodPresent = await Db.Food.findOne({ name });
+    if (isFoodPresent) {
+      return ('Food Item already present');
+    }
     const response = await food.save();
     return response;
   } catch (err) {
@@ -20,5 +24,24 @@ const getFoodItems = async () => {
     return 'cannot retrieve food items';
   }
 };
-
-export default { addFoodItem, getFoodItems };
+const updateFoodByPrice = async (name, cost) => {
+  try {
+    const response = await Db.Food.updateOne({ name }, {
+      cost,
+    });
+    return response;
+  } catch (err) {
+    return 'cannot update price';
+  }
+};
+const deleteFoodByName = async (name) => {
+  try {
+    const response = await Db.Food.deleteOne({ name });
+    return response;
+  } catch (err) {
+    return 'cannot delete food item';
+  }
+};
+export default {
+  addFoodItem, getFoodItems, updateFoodByPrice, deleteFoodByName,
+};
